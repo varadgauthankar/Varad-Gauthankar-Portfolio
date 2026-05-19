@@ -6,26 +6,26 @@ const videos = [
   { 
     id: 1, 
     type: "horizontal", 
-    title: "MAHABALESHWAR | Cinematic Video", 
-    thumbnail: "https://img.youtube.com/vi/iO94et2kBIg/maxresdefault.jpg", 
-    videoUrl: "https://www.youtube.com/watch?v=iO94et2kBIg",
-    duration: "2:45" 
+    title: "Mural for India Climate Week 2025", 
+    thumbnail: "https://img.youtube.com/vi/62WtD1_a2cE/maxresdefault.jpg", 
+    videoUrl: "https://www.youtube.com/watch?v=62WtD1_a2cE",
+    duration: "3:12" 
   },
   { 
     id: 2, 
     type: "horizontal", 
-    title: "Urban Rhythms", 
-    thumbnail: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&q=80&w=800", 
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-top-view-of-a-busy-city-at-night-34131-large.mp4",
-    duration: "1:30" 
+    title: "Janmastami 2025 at Goa college of art", 
+    thumbnail: "https://img.youtube.com/vi/s9KbQjCsz78/maxresdefault.jpg", 
+    videoUrl: "https://youtu.be/s9KbQjCsz78",
+    duration: "2:45" 
   },
   { 
     id: 3, 
     type: "vertical", 
-    title: "Social Story #1", 
-    thumbnail: "https://images.unsplash.com/photo-1511317551221-df996027b461?auto=format&fit=crop&q=80&w=400", 
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-tree-with-yellow-flowers-in-the-wind-34538-large.mp4",
-    duration: "0:15" 
+    title: "glimpses of sport day.", 
+    thumbnail: "https://img.youtube.com/vi/s2LIrTfzxKM/maxresdefault.jpg", 
+    videoUrl: "https://www.youtube.com/shorts/s2LIrTfzxKM",
+    duration: "0:30" 
   },
   { 
     id: 4, 
@@ -42,6 +42,15 @@ const designs = [
   { title: "Minimal UI Kit", thumbnail: "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?auto=format&fit=crop&q=80&w=600", link: "#" },
   { title: "Organic Packaging", thumbnail: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=600", link: "#" },
   { title: "Editorial Layout", thumbnail: "https://images.unsplash.com/photo-1509343256512-d77a5ea92851?auto=format&fit=crop&q=80&w=600", link: "#" },
+];
+
+const photos = [
+  { id: 1, title: "Urban Geometry", thumbnail: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800" },
+  { id: 2, title: "Ethereal Mountains", thumbnail: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=800" },
+  { id: 3, title: "Noir Street", thumbnail: "https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&q=80&w=800" },
+  { id: 4, title: "Golden Hour Detail", thumbnail: "https://images.unsplash.com/photo-1518005020250-6859458316e0?auto=format&fit=crop&q=80&w=800" },
+  { id: 5, title: "Cinematic Portrait", thumbnail: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=800" },
+  { id: 6, title: "Atmospheric Fog", thumbnail: "https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?auto=format&fit=crop&q=80&w=800" },
 ];
 
 // Video Card component for hover-to-play
@@ -93,59 +102,70 @@ function VideoCard({ video, onClick }: { video: typeof videos[0], onClick: () =>
 
 export default function Works() {
   const [selectedVideo, setSelectedVideo] = useState<typeof videos[0] | null>(null);
+  const [selectedPhoto, setSelectedPhoto] = useState<typeof photos[0] | null>(null);
 
   const getYoutubeEmbedUrl = (url: string) => {
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|shorts\/)([^#\&\?]*).*/;
     const match = url.match(regExp);
     return (match && match[2].length === 11) ? `https://www.youtube.com/embed/${match[2]}?autoplay=1` : null;
   };
 
   return (
     <section id="works" className="px-6 md:px-12 py-20 md:py-32 bg-brand-cream max-w-7xl mx-auto">
-      {/* Video Modal */}
+      {/* Video/Photo Modal */}
       <AnimatePresence>
-        {selectedVideo && (
+        {(selectedVideo || selectedPhoto) && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10 bg-black/95 backdrop-blur-sm"
-            onClick={() => setSelectedVideo(null)}
+            onClick={() => { setSelectedVideo(null); setSelectedPhoto(null); }}
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="relative w-full max-w-5xl aspect-video bg-black rounded-xl overflow-hidden shadow-2xl"
+              className={`relative w-full max-w-5xl ${selectedVideo ? 'aspect-video' : 'max-h-full'} bg-black rounded-xl overflow-hidden shadow-2xl`}
               onClick={(e) => e.stopPropagation()}
             >
               <button 
-                onClick={() => setSelectedVideo(null)}
+                onClick={() => { setSelectedVideo(null); setSelectedPhoto(null); }}
                 className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md flex items-center justify-center text-white transition-colors"
-                aria-label="Close video"
+                aria-label="Close"
               >
                 <X className="w-6 h-6" />
               </button>
               
-              {selectedVideo.videoUrl.includes('youtube.com') || selectedVideo.videoUrl.includes('youtu.be') ? (
-                <iframe
-                  className="w-full h-full"
-                  src={getYoutubeEmbedUrl(selectedVideo.videoUrl) || ''}
-                  title={selectedVideo.title}
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                ></iframe>
-              ) : (
-                <video
-                  controls
-                  autoPlay
-                  className="w-full h-full"
-                  key={selectedVideo.id}
-                >
-                  <source src={selectedVideo.videoUrl} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
+              {selectedVideo ? (
+                <>
+                  {selectedVideo.videoUrl.includes('youtube.com') || selectedVideo.videoUrl.includes('youtu.be') ? (
+                    <iframe
+                      className="w-full h-full"
+                      src={getYoutubeEmbedUrl(selectedVideo.videoUrl) || ''}
+                      title={selectedVideo.title}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                    ></iframe>
+                  ) : (
+                    <video
+                      controls
+                      autoPlay
+                      className="w-full h-full"
+                      key={selectedVideo.id}
+                    >
+                      <source src={selectedVideo.videoUrl} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  )}
+                </>
+              ) : selectedPhoto && (
+                <img 
+                  src={selectedPhoto.thumbnail} 
+                  alt={selectedPhoto.title} 
+                  className="w-full h-full object-contain"
+                />
               )}
             </motion.div>
           </motion.div>
@@ -178,10 +198,37 @@ export default function Works() {
         </div>
       </div>
 
-      {/* LINE BREAK */}
-      <div className="w-full h-px bg-brand-stone-200 mb-20 md:mb-24 relative">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-brand-cream px-4">
-          <div className="w-2 h-2 rounded-full bg-brand-yellow" />
+      {/* SECTION 01.5: PHOTOGRAPHY */}
+      <div className="mb-20 md:mb-24">
+        <div className="flex justify-between items-end mb-8 md:mb-12 border-b border-brand-stone-200 pb-6 md:pb-8">
+          <div>
+            <h2 className="text-xs uppercase tracking-widest text-brand-amber font-black mb-3 md:mb-4">02.2 / work / photography</h2>
+            <h3 className="text-3xl md:text-5xl font-serif">Stills & Moments</h3>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+          {photos.map((photo) => (
+            <motion.div
+              key={photo.id}
+              whileHover={{ scale: 0.98 }}
+              className="relative aspect-[3/2] group cursor-pointer overflow-hidden rounded-2xl md:rounded-3xl bg-brand-stone-100 shadow-md"
+              onClick={() => setSelectedPhoto(photo)}
+            >
+              <img 
+                src={photo.thumbnail} 
+                alt={photo.title} 
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+              />
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-6">
+                <div className="text-center">
+                  <p className="text-[10px] md:text-xs font-black uppercase tracking-widest text-brand-yellow mb-2">View Shot</p>
+                  <p className="text-white font-serif italic text-lg md:text-xl">{photo.title}</p>
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
 
@@ -189,7 +236,7 @@ export default function Works() {
       <div className="mb-20 md:mb-24">
         <div className="flex justify-between items-end mb-8 md:mb-12 border-b border-brand-stone-200 pb-6 md:pb-8">
           <div>
-            <h2 className="text-xs uppercase tracking-widest text-brand-amber font-black mb-3 md:mb-4">02.2 / work / design</h2>
+            <h2 className="text-xs uppercase tracking-widest text-brand-amber font-black mb-3 md:mb-4">02.3 / work / design</h2>
             <h3 className="text-3xl md:text-5xl font-serif">Visual Systems</h3>
           </div>
         </div>
