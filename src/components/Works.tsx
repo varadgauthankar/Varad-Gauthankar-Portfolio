@@ -38,23 +38,24 @@ const videos = [
 ];
 
 const designs = [
-  { title: "Brand Identity X", thumbnail: "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=600", link: "#" },
-  { title: "Minimal UI Kit", thumbnail: "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?auto=format&fit=crop&q=80&w=600", link: "#" },
-  { title: "Organic Packaging", thumbnail: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=600", link: "#" },
-  { title: "Editorial Layout", thumbnail: "https://images.unsplash.com/photo-1509343256512-d77a5ea92851?auto=format&fit=crop&q=80&w=600", link: "#" },
+  { 
+    title: "PRYSM - Wired to Wonder", 
+    thumbnail: "/photos/photo_prysm.jpg", 
+    link: "https://www.behance.net/gallery/249794309/PRYSM-Wired-to-Wonder" 
+  }
 ];
 
 const photos = [
-  { id: 1, title: "Urban Geometry", thumbnail: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800" },
-  { id: 2, title: "Ethereal Mountains", thumbnail: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=800" },
-  { id: 3, title: "Noir Street", thumbnail: "https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&q=80&w=800" },
-  { id: 4, title: "Golden Hour Detail", thumbnail: "https://images.unsplash.com/photo-1518005020250-6859458316e0?auto=format&fit=crop&q=80&w=800" },
-  { id: 5, title: "Cinematic Portrait", thumbnail: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=800" },
-  { id: 6, title: "Atmospheric Fog", thumbnail: "https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?auto=format&fit=crop&q=80&w=800" },
+  { id: 1, title: "The Canvas of Community", thumbnail: "/photos/photo_2.jpg" },
+  { id: 2, title: "Clay and Henna", thumbnail: "/photos/photo_4.jpg" },
+  { id: 3, title: "Heights of Expression", thumbnail: "/photos/photo_7.jpg" },
+  { id: 4, title: "The Studio Gateway", thumbnail: "/photos/photo_11.jpg" },
+  { id: 5, title: "Brushes and Belonging", thumbnail: "/photos/photo_14.jpg" },
+  { id: 6, title: "Whispers of Clay", thumbnail: "/photos/photo_17.jpg" },
 ];
 
 // Video Card component for hover-to-play
-function VideoCard({ video, onClick }: { video: typeof videos[0], onClick: () => void }) {
+function VideoCard({ video, onClick }: { video: typeof videos[0], onClick: () => void, key?: any }) {
   const [isHovered, setIsHovered] = useState(false);
   const isYoutube = video.videoUrl.includes('youtube.com') || video.videoUrl.includes('youtu.be');
 
@@ -174,7 +175,7 @@ export default function Works() {
 
       {/* SECTION 01: VIDEOS */}
       <div className="mb-20 md:mb-24">
-        <div className="flex justify-between items-end mb-8 md:mb-12 border-b border-brand-stone-200 pb-6 md:pb-8">
+        <div className="flex justify-between items-end mb-8 md:mb-12">
           <div>
             <h2 className="text-xs uppercase tracking-widest text-brand-amber font-black mb-3 md:mb-4">02.1 / work / visuals</h2>
             <h3 className="text-3xl md:text-5xl font-serif">Film & Visuals</h3>
@@ -200,7 +201,7 @@ export default function Works() {
 
       {/* SECTION 01.5: PHOTOGRAPHY */}
       <div className="mb-20 md:mb-24">
-        <div className="flex justify-between items-end mb-8 md:mb-12 border-b border-brand-stone-200 pb-6 md:pb-8">
+        <div className="flex justify-between items-end mb-8 md:mb-12">
           <div>
             <h2 className="text-xs uppercase tracking-widest text-brand-amber font-black mb-3 md:mb-4">02.2 / work / photography</h2>
             <h3 className="text-3xl md:text-5xl font-serif">Stills & Moments</h3>
@@ -234,15 +235,15 @@ export default function Works() {
 
       {/* SECTION 02: DESIGN */}
       <div className="mb-20 md:mb-24">
-        <div className="flex justify-between items-end mb-8 md:mb-12 border-b border-brand-stone-200 pb-6 md:pb-8">
+        <div className="flex justify-between items-end mb-8 md:mb-12">
           <div>
             <h2 className="text-xs uppercase tracking-widest text-brand-amber font-black mb-3 md:mb-4">02.3 / work / design</h2>
-            <h3 className="text-3xl md:text-5xl font-serif">Visual Systems</h3>
+            <h3 className="text-3xl md:text-5xl font-serif">Design & Identities</h3>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-          {designs.slice(0, 2).map((design, idx) => (
+          {designs.map((design, idx) => (
             <motion.a
               key={idx}
               href={design.link}
@@ -252,8 +253,7 @@ export default function Works() {
               className="group flex flex-col gap-4 md:gap-6"
             >
               <div className="aspect-[16/10] bg-brand-stone-200 rounded-2xl md:rounded-3xl overflow-hidden relative shadow-lg">
-                <div className="absolute inset-0 bg-brand-yellow mix-blend-multiply opacity-10 group-hover:opacity-30 transition-opacity" />
-                <img src={design.thumbnail} alt={design.title} referrerPolicy="no-referrer" className="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000" />
+                <img src={design.thumbnail} alt={design.title} referrerPolicy="no-referrer" className="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000" />
                 <div className="absolute bottom-4 right-4 md:bottom-6 md:right-6">
                   <div className="w-10 h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur rounded-full flex items-center justify-center shadow-lg group-hover:bg-brand-yellow transition-colors">
                     <ExternalLink className="w-4 h-4 md:w-5 md:h-5 text-brand-stone-900" />
@@ -269,14 +269,6 @@ export default function Works() {
         </div>
       </div>
 
-      <footer className="mt-16 pt-10 border-t border-brand-stone-200 flex flex-col md:flex-row justify-between items-center gap-6">
-        <span className="text-[10px] text-brand-stone-400 font-black uppercase tracking-[0.3em]">© 2026 Varad Gauthankar</span>
-        <div className="flex gap-4">
-          <div className="w-2.5 h-2.5 rounded-full bg-brand-yellow shadow-[0_0_10px_rgba(251,191,36,0.5)]"></div>
-          <div className="w-2.5 h-2.5 rounded-full bg-brand-stone-200"></div>
-          <div className="w-2.5 h-2.5 rounded-full bg-brand-stone-200"></div>
-        </div>
-      </footer>
     </section>
   );
 }
