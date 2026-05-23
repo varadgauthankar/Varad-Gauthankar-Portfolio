@@ -84,8 +84,8 @@ const videos = [
 const designs = [
   { 
     title: "PRYSM - Wired to Wonder", 
-    thumbnail: "/photos/thumbnails/photo_prysm.jpg", 
-    fullres: "/photos/photo_prysm.jpg",
+    thumbnail: "photos/thumbnails/photo_prysm.jpg", 
+    fullres: "photos/photo_prysm.jpg",
     link: "https://www.behance.net/gallery/249794309/PRYSM-Wired-to-Wonder" 
   }
 ];
@@ -102,14 +102,14 @@ const fallbacks: Record<number, string> = {
 };
 
 const photos = [
-  { id: 1, title: "", thumbnail: "/photos/thumbnails/photo_1.jpeg", fullres: "/photos/photo_1.jpeg" },
-  { id: 2, title: "", thumbnail: "/photos/thumbnails/photo_2.jpeg", fullres: "/photos/photo_2.jpeg" },
-  { id: 3, title: "", thumbnail: "/photos/thumbnails/photo_3.jpeg", fullres: "/photos/photo_3.jpeg" },
-  { id: 4, title: "", thumbnail: "/photos/thumbnails/photo_4.jpeg", fullres: "/photos/photo_4.jpeg" },
-  { id: 5, title: "", thumbnail: "/photos/thumbnails/photo_5.jpeg", fullres: "/photos/photo_5.jpeg" },
-  { id: 6, title: "", thumbnail: "/photos/thumbnails/photo_6.jpeg", fullres: "/photos/photo_6.jpeg" },
-  { id: 7, title: "", thumbnail: "/photos/thumbnails/photo_7.jpeg", fullres: "/photos/photo_7.jpeg" },
-  { id: 8, title: "", thumbnail: "/photos/thumbnails/photo_8.jpeg", fullres: "/photos/photo_8.jpeg" },
+  { id: 1, title: "", thumbnail: "photos/thumbnails/photo_1.jpeg", fullres: "photos/photo_1.jpeg" },
+  { id: 2, title: "", thumbnail: "photos/thumbnails/photo_2.jpeg", fullres: "photos/photo_2.jpeg" },
+  { id: 3, title: "", thumbnail: "photos/thumbnails/photo_3.jpeg", fullres: "photos/photo_3.jpeg" },
+  { id: 4, title: "", thumbnail: "photos/thumbnails/photo_4.jpeg", fullres: "photos/photo_4.jpeg" },
+  { id: 5, title: "", thumbnail: "photos/thumbnails/photo_5.jpeg", fullres: "photos/photo_5.jpeg" },
+  { id: 6, title: "", thumbnail: "photos/thumbnails/photo_6.jpeg", fullres: "photos/photo_6.jpeg" },
+  { id: 7, title: "", thumbnail: "photos/thumbnails/photo_7.jpeg", fullres: "photos/photo_7.jpeg" },
+  { id: 8, title: "", thumbnail: "photos/thumbnails/photo_8.jpeg", fullres: "photos/photo_8.jpeg" },
 ];
 
 // Video Card component for hover-to-play
