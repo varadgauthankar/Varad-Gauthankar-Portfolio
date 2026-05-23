@@ -1,6 +1,50 @@
 import { motion, AnimatePresence } from "motion/react";
 import { Play, ExternalLink, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+// Robust component to handle smooth progressive loading, lazy-loading, and chain fallback support
+function OptimizedImage({ src, alt, className = "", fallbacks = [], isGrid = false }: {
+  src: string;
+  alt: string;
+  className?: string;
+  fallbacks?: string[];
+  isGrid?: boolean;
+}) {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [currentSrc, setCurrentSrc] = useState(src);
+  const [fallbackIndex, setFallbackIndex] = useState(0);
+
+  useEffect(() => {
+    setCurrentSrc(src);
+    setIsLoaded(false);
+    setFallbackIndex(0);
+  }, [src]);
+
+  return (
+    <div className="relative w-full h-full bg-brand-stone-100 overflow-hidden flex items-center justify-center">
+      {/* High precision shimmering skeleton loader with mini-spinner */}
+      {!isLoaded && (
+        <div className="absolute inset-0 bg-neutral-200 animate-pulse flex items-center justify-center">
+          <div className="w-5 h-5 rounded-full border-2 border-neutral-300 border-t-brand-amber animate-spin" />
+        </div>
+      )}
+      <img
+        src={currentSrc}
+        alt={alt}
+        loading={isGrid ? "lazy" : "eager"}
+        onLoad={() => setIsLoaded(true)}
+        onError={() => {
+          if (fallbackIndex < fallbacks.length) {
+            const nextFallback = fallbacks[fallbackIndex];
+            setFallbackIndex(prev => prev + 1);
+            setCurrentSrc(nextFallback);
+          }
+        }}
+        className={`${className} transition-opacity duration-500 ease-out ${isLoaded ? "opacity-100" : "opacity-0"}`}
+      />
+    </div>
+  );
+}
 
 const videos = [
   { 
@@ -27,14 +71,14 @@ const videos = [
     videoUrl: "https://www.youtube.com/shorts/s2LIrTfzxKM",
     duration: "0:30" 
   },
-  { 
-    id: 4, 
-    type: "vertical", 
-    title: "Social Story #2", 
-    thumbnail: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&q=80&w=400", 
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-portrait-of-a-woman-in-a-field-of-flowers-34522-large.mp4",
-    duration: "0:20" 
-  },
+  // { 
+  //   id: 4, 
+  //   type: "vertical", 
+  //   title: "Social Story #2", 
+  //   thumbnail: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&q=80&w=400", 
+  //   videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-portrait-of-a-woman-in-a-field-of-flowers-34522-large.mp4",
+  //   duration: "0:20" 
+  // },
 ];
 
 const designs = [
@@ -57,14 +101,14 @@ const fallbacks: Record<number, string> = {
 };
 
 const photos = [
-  { id: 1, title: "", thumbnail: "/photos/photo_1.jpeg" },
-  { id: 2, title: "", thumbnail: "/photos/photo_2.jpeg" },
-  { id: 3, title: "", thumbnail: "/photos/photo_3.jpeg" },
-  { id: 4, title: "", thumbnail: "/photos/photo_4.jpeg" },
-  { id: 5, title: "", thumbnail: "/photos/photo_5.jpeg" },
-  { id: 6, title: "", thumbnail: "/photos/photo_6.jpeg" },
-  { id: 7, title: "", thumbnail: "/photos/photo_7.jpeg" },
-  { id: 8, title: "", thumbnail: "/photos/photo_8.jpeg" },
+  { id: 1, title: "", thumbnail: "/photos/thumbnails/photo_1.jpeg", fullres: "/photos/photo_1.jpeg" },
+  { id: 2, title: "", thumbnail: "/photos/thumbnails/photo_2.jpeg", fullres: "/photos/photo_2.jpeg" },
+  { id: 3, title: "", thumbnail: "/photos/thumbnails/photo_3.jpeg", fullres: "/photos/photo_3.jpeg" },
+  { id: 4, title: "", thumbnail: "/photos/thumbnails/photo_4.jpeg", fullres: "/photos/photo_4.jpeg" },
+  { id: 5, title: "", thumbnail: "/photos/thumbnails/photo_5.jpeg", fullres: "/photos/photo_5.jpeg" },
+  { id: 6, title: "", thumbnail: "/photos/thumbnails/photo_6.jpeg", fullres: "/photos/photo_6.jpeg" },
+  { id: 7, title: "", thumbnail: "/photos/thumbnails/photo_7.jpeg", fullres: "/photos/photo_7.jpeg" },
+  { id: 8, title: "", thumbnail: "/photos/thumbnails/photo_8.jpeg", fullres: "/photos/photo_8.jpeg" },
 ];
 
 // Video Card component for hover-to-play
@@ -175,19 +219,10 @@ export default function Works() {
                   )}
                 </>
               ) : selectedPhoto && (
-                <img 
-                  src={selectedPhoto.thumbnail} 
-                  alt={selectedPhoto.title} 
-                  referrerPolicy="no-referrer"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    const currentSrc = target.src;
-                    if (currentSrc.toLowerCase().endsWith('.jpeg')) {
-                      target.src = currentSrc.substring(0, currentSrc.length - 5) + '.jpg';
-                    } else if (target.src !== fallbacks[selectedPhoto.id]) {
-                      target.src = fallbacks[selectedPhoto.id];
-                    }
-                  }}
+                <OptimizedImage 
+                  src={selectedPhoto.fullres} 
+                  alt={selectedPhoto.title || "Zoomed Photo"} 
+                  fallbacks={[selectedPhoto.thumbnail, fallbacks[selectedPhoto.id]]}
                   className="w-full h-full object-contain"
                 />
               )}
@@ -240,13 +275,11 @@ export default function Works() {
               className="relative aspect-[4/3] group cursor-pointer overflow-hidden rounded-2xl md:rounded-3xl bg-brand-stone-100 shadow-md"
               onClick={() => setSelectedPhoto(photo)}
             >
-            
-              <img 
+              <OptimizedImage 
                 src={photo.thumbnail}
-                alt={photo.title} 
-                onError={(e) => {
-                  
-                }}
+                alt={photo.title || `Stills and Moments ${photo.id}`} 
+                fallbacks={[fallbacks[photo.id]]}
+                isGrid={true}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
               />
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-6">
