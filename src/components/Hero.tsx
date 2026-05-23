@@ -28,19 +28,23 @@ export default function Hero({ onOpenResume }: HeroProps) {
           transition={{ duration: 1.2 }}
           className="w-full h-full"
         >
-          <video
-            ref={videoRef}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            poster="https://img.youtube.com/vi/LTs35_dt9Ec/maxresdefault.jpg"
-            className="w-full h-full object-cover"
-          >
-            <source src="hero_video.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+        
+
+        <video
+  autoPlay
+  muted
+  loop
+  playsInline
+  className="absolute inset-0 w-full h-full object-cover"
+>
+  <source
+    src="https://res.cloudinary.com/dnipszkcj/video/upload/v1779564913/video_portfolio_loop-2_m54alh.mp4"
+    type="video/mp4"
+  />
+</video>
+
+
+
         </motion.div>
         {/* Overlays for content readability */}
         <div className="absolute inset-0 bg-black/8" />

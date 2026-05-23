@@ -90,16 +90,6 @@ const designs = [
   }
 ];
 
-const fallbacks: Record<number, string> = {
-  1: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&q=80&w=800",
-  2: "https://images.unsplash.com/photo-1565192647048-f997ded87958?auto=format&fit=crop&q=80&w=800",
-  3: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=800",
-  4: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&q=80&w=800",
-  5: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&q=80&w=800",
-  6: "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?auto=format&fit=crop&q=80&w=800",
-  7: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=800",
-  8: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=800",
-};
 
 const photos = [
   { id: 1, title: "", thumbnail: "photos/thumbnails/photo_1.jpeg", fullres: "photos/photo_1.jpeg" },
@@ -279,7 +269,6 @@ export default function Works() {
               <OptimizedImage 
                 src={photo.thumbnail}
                 alt={photo.title || `Stills and Moments ${photo.id}`} 
-                fallbacks={[fallbacks[photo.id]]}
                 isGrid={true}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
               />
