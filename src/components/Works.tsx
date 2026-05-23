@@ -83,23 +83,23 @@ const videos = [
 
 const designs = [
   { 
+    id: 1,
     title: "PRYSM - Wired to Wonder", 
-    thumbnail: "photos/thumbnails/photo_prysm.jpg", 
-    fullres: "photos/photo_prysm.jpg",
+    thumbnail: "/photos/thumbnails/prysm_cover.jpeg", 
     link: "https://www.behance.net/gallery/249794309/PRYSM-Wired-to-Wonder" 
   }
 ];
 
 
 const photos = [
-  { id: 1, title: "", thumbnail: "photos/thumbnails/photo_1.jpeg", fullres: "photos/photo_1.jpeg" },
-  { id: 2, title: "", thumbnail: "photos/thumbnails/photo_2.jpeg", fullres: "photos/photo_2.jpeg" },
-  { id: 3, title: "", thumbnail: "photos/thumbnails/photo_3.jpeg", fullres: "photos/photo_3.jpeg" },
-  { id: 4, title: "", thumbnail: "photos/thumbnails/photo_4.jpeg", fullres: "photos/photo_4.jpeg" },
-  { id: 5, title: "", thumbnail: "photos/thumbnails/photo_5.jpeg", fullres: "photos/photo_5.jpeg" },
-  { id: 6, title: "", thumbnail: "photos/thumbnails/photo_6.jpeg", fullres: "photos/photo_6.jpeg" },
-  { id: 7, title: "", thumbnail: "photos/thumbnails/photo_7.jpeg", fullres: "photos/photo_7.jpeg" },
-  { id: 8, title: "", thumbnail: "photos/thumbnails/photo_8.jpeg", fullres: "photos/photo_8.jpeg" },
+  { id: 1, title: "", thumbnail: "/photos/thumbnails/photo_1.jpeg", fullres: "/photos/photo_1.jpeg" },
+  { id: 2, title: "", thumbnail: "/photos/thumbnails/photo_2.jpeg", fullres: "/photos/photo_2.jpeg" },
+  { id: 3, title: "", thumbnail: "/photos/thumbnails/photo_3.jpeg", fullres: "/photos/photo_3.jpeg" },
+  { id: 4, title: "", thumbnail: "/photos/thumbnails/photo_4.jpeg", fullres: "/photos/photo_4.jpeg" },
+  { id: 5, title: "", thumbnail: "/photos/thumbnails/photo_5.jpeg", fullres: "/photos/photo_5.jpeg" },
+  { id: 6, title: "", thumbnail: "/photos/thumbnails/photo_6.jpeg", fullres: "/photos/photo_6.jpeg" },
+  { id: 7, title: "", thumbnail: "/photos/thumbnails/photo_7.jpeg", fullres: "/photos/photo_7.jpeg" },
+  { id: 8, title: "", thumbnail: "/photos/thumbnails/photo_8.jpeg", fullres: "/photos/photo_8.jpeg" },
 ];
 
 // Video Card component for hover-to-play
@@ -210,11 +210,10 @@ export default function Works() {
                   )}
                 </>
               ) : selectedPhoto && (
-                <OptimizedImage 
+                <img 
                   src={selectedPhoto.fullres} 
                   alt={selectedPhoto.title || "Zoomed Photo"} 
-                  fallbacks={[selectedPhoto.thumbnail, fallbacks[selectedPhoto.id]]}
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-contain mx-auto"
                 />
               )}
             </motion.div>
@@ -266,12 +265,13 @@ export default function Works() {
               className="relative aspect-[4/3] group cursor-pointer overflow-hidden rounded-2xl md:rounded-3xl bg-brand-stone-100 shadow-md"
               onClick={() => setSelectedPhoto(photo)}
             >
-              <OptimizedImage 
+              <img 
                 src={photo.thumbnail}
                 alt={photo.title || `Stills and Moments ${photo.id}`} 
-                isGrid={true}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                loading="lazy"
               />
+
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-6">
                 <div className="text-center">
                   <p className="text-[10px] md:text-xs font-black uppercase tracking-widest text-brand-yellow mb-2">View Shot</p>
@@ -302,13 +302,13 @@ export default function Works() {
               className="group flex flex-col gap-4 md:gap-6"
             >
               <div className="aspect-[16/10] bg-brand-stone-200 rounded-2xl md:rounded-3xl overflow-hidden relative shadow-lg">
-                <OptimizedImage 
-                  src={design.thumbnail} 
-                  alt={design.title} 
-                  fallbacks={[design.fullres]} 
-                  isGrid={true}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000" 
-                />
+                <img 
+                src={design.thumbnail}
+                alt={design.title || `Design ${design.id}`} 
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                loading="lazy"
+              />
+
                 <div className="absolute bottom-4 right-4 md:bottom-6 md:right-6">
                   <div className="w-10 h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur rounded-full flex items-center justify-center shadow-lg group-hover:bg-brand-yellow transition-colors">
                     <ExternalLink className="w-4 h-4 md:w-5 md:h-5 text-brand-stone-900" />
