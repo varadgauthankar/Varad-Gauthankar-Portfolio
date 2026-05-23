@@ -9,23 +9,28 @@ export default function Hero({ onOpenResume }: HeroProps) {
   return (
     <section id="about" className="relative min-h-screen flex flex-col justify-center px-6 md:px-12 py-24 md:py-32 overflow-hidden bg-black">
       {/* Video Background */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
-        <video 
-          key="hero-video-v3"
-          autoPlay 
-          muted 
-          loop 
-          playsInline 
-          preload="auto"
-          poster="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80"
-          className="w-full h-full object-cover"
+      <div className="absolute inset-0 z-0 overflow-hidden bg-black">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.55 }}
+          transition={{ duration: 1.2 }}
+          className="w-full h-full"
         >
-          <source src="https://vjs.zencdn.net/v/oceans.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            className="w-full h-full object-cover"
+          >
+            <source src="/hero_video.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </motion.div>
         {/* Overlays for content readability */}
-        <div className="absolute inset-0 bg-black/30" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+        <div className="absolute inset-0 bg-black/8" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-transparent" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto w-full">

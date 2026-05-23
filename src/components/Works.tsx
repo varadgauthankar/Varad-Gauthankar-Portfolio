@@ -84,7 +84,8 @@ const videos = [
 const designs = [
   { 
     title: "PRYSM - Wired to Wonder", 
-    thumbnail: "/photos/photo_prysm.jpg", 
+    thumbnail: "/photos/thumbnails/photo_prysm.jpg", 
+    fullres: "/photos/photo_prysm.jpg",
     link: "https://www.behance.net/gallery/249794309/PRYSM-Wired-to-Wonder" 
   }
 ];
@@ -312,7 +313,13 @@ export default function Works() {
               className="group flex flex-col gap-4 md:gap-6"
             >
               <div className="aspect-[16/10] bg-brand-stone-200 rounded-2xl md:rounded-3xl overflow-hidden relative shadow-lg">
-                <img src={design.thumbnail} alt={design.title} className="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000" />
+                <OptimizedImage 
+                  src={design.thumbnail} 
+                  alt={design.title} 
+                  fallbacks={[design.fullres]} 
+                  isGrid={true}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000" 
+                />
                 <div className="absolute bottom-4 right-4 md:bottom-6 md:right-6">
                   <div className="w-10 h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur rounded-full flex items-center justify-center shadow-lg group-hover:bg-brand-yellow transition-colors">
                     <ExternalLink className="w-4 h-4 md:w-5 md:h-5 text-brand-stone-900" />
