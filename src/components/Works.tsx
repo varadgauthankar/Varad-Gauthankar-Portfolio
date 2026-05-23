@@ -141,7 +141,7 @@ function VideoCard({ video, onClick }: { video: typeof videos[0], onClick: () =>
       </div>
 
       <div className="absolute bottom-4 md:bottom-6 left-4 md:left-6 right-4 pointer-events-none transition-transform duration-300">
-        <p className={`font-serif italic text-white leading-tight ${video.type === 'horizontal' ? 'text-lg md:text-xl' : 'text-sm md:text-lg'}`}>
+        <p className={`font-poppins not-italic text-white leading-tight ${video.type === 'horizontal' ? 'text-lg md:text-xl' : 'text-sm md:text-lg'}`}>
           {video.title}
         </p>
       </div>
@@ -317,7 +317,7 @@ export default function Works() {
               </div>
               <div className="pl-1 md:pl-2">
                 <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-brand-amber mb-1 md:mb-2">Project 0{idx + 1}</p>
-                <h4 className="text-2xl md:text-3xl font-serif italic">{design.title}</h4>
+                <h4 className="text-[27px] font-poppins font-normal not-italic">{design.title}</h4>
               </div>
             </motion.a>
           ))}

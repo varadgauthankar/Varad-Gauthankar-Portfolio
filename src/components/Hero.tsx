@@ -68,7 +68,7 @@ export default function Hero({ onOpenResume }: HeroProps) {
               <span className="italic text-brand-yellow block mt-4">Gauthankar</span>
             </h1>
             
-            <p className="text-lg sm:text-xl md:text-2xl text-brand-stone-200 leading-relaxed font-sans mb-8 max-w-2xl font-light">
+            <p className="text-lg sm:text-xl md:text-2xl text-brand-stone-200 leading-relaxed font-poppins mb-8 max-w-2xl font-light">
               I am a visual creator specializing in professional video shoots, cinematic video editing, and modern digital design. My work bridges the gap between raw footage and polished storytelling.
             </p>
 

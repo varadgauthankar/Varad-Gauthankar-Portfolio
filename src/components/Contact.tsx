@@ -19,13 +19,13 @@ export default function Contact() {
           </p>
           
           <div className="flex flex-col gap-6 md:gap-8">
-            <a href="mailto:hello@varad.com" className="flex items-center gap-4 md:gap-6 group w-fit">
+            <a href="mailto:gvarad1601@gmail.com" className="flex items-center gap-4 md:gap-6 group w-fit">
               <div className="w-12 h-12 md:w-16 md:h-16 rounded-full border border-brand-yellow/20 flex items-center justify-center group-hover:bg-brand-yellow group-hover:border-brand-yellow transition-all duration-500 shrink-0">
                 <Mail className="w-5 h-5 md:w-6 md:h-6 group-hover:text-brand-stone-900 transition-colors" />
               </div>
               <div className="flex flex-col min-w-0">
                 <span className="text-[10px] font-black uppercase tracking-widest text-brand-stone-500 mb-1">Email me</span>
-                <span className="text-xl md:text-2xl font-serif italic border-b border-transparent group-hover:border-brand-yellow transition-all truncate">hello@varad.com</span>
+                <span className="text-xl md:text-2xl font-sans not-italic border-b border-transparent group-hover:border-brand-yellow transition-all truncate">gvarad1601@gmail.com</span>
               </div>
             </a>
           </div>
