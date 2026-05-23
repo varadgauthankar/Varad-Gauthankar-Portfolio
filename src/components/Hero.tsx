@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { motion } from "motion/react";
 import { Download } from "lucide-react";
 
@@ -6,6 +7,17 @@ interface HeroProps {
 }
 
 export default function Hero({ onOpenResume }: HeroProps) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = true;
+      videoRef.current.play().catch((err) => {
+        console.warn("Autoplay was prevented or delayed:", err);
+      });
+    }
+  }, []);
+
   return (
     <section id="about" className="relative min-h-screen flex flex-col justify-center px-6 md:px-12 py-24 md:py-32 overflow-hidden bg-black">
       {/* Video Background */}
@@ -17,11 +29,13 @@ export default function Hero({ onOpenResume }: HeroProps) {
           className="w-full h-full"
         >
           <video
+            ref={videoRef}
             autoPlay
             muted
             loop
             playsInline
             preload="auto"
+            poster="https://img.youtube.com/vi/LTs35_dt9Ec/maxresdefault.jpg"
             className="w-full h-full object-cover"
           >
             <source src="/hero_video.mp4" type="video/mp4" />
