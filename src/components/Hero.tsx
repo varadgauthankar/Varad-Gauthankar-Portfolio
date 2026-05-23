@@ -1,6 +1,11 @@
 import { motion } from "motion/react";
+import { Download } from "lucide-react";
 
-export default function Hero() {
+interface HeroProps {
+  onOpenResume: () => void;
+}
+
+export default function Hero({ onOpenResume }: HeroProps) {
   return (
     <section id="about" className="relative min-h-screen flex flex-col justify-center px-6 md:px-12 py-24 md:py-32 overflow-hidden bg-black">
       {/* Video Background */}
@@ -40,9 +45,21 @@ export default function Hero() {
               <span className="italic text-brand-yellow block mt-4">Gauthankar</span>
             </h1>
             
-            <p className="text-lg sm:text-xl md:text-2xl text-brand-stone-200 leading-relaxed font-sans mb-12 max-w-2xl font-light">
+            <p className="text-lg sm:text-xl md:text-2xl text-brand-stone-200 leading-relaxed font-sans mb-8 max-w-2xl font-light">
               I am a visual creator specializing in professional video shoots, cinematic video editing, and modern digital design. My work bridges the gap between raw footage and polished storytelling.
             </p>
+
+            <div className="mb-10">
+              <a 
+                href="resume.pdf" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2.5 px-6 py-3.5 bg-brand-yellow hover:bg-brand-yellow/90 text-brand-stone-900 font-extrabold uppercase tracking-[0.2em] text-[10px] md:text-xs rounded-lg transition-all shadow-md hover:shadow-brand-yellow/10 hover:scale-[1.01]"
+              >
+                <Download className="w-4 h-4 text-brand-stone-900 stroke-[2.5]" />
+                Download Resume
+              </a>
+            </div>
 
             <div className="flex flex-wrap items-center gap-x-3 md:gap-x-4 gap-y-2 text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-white">
               <span>Video Editor</span>

@@ -6,9 +6,14 @@ const navItems = [
   { name: "About", href: "#about" },
   { name: "Works", href: "#works" },
   { name: "Contact", href: "#contact" },
+  { name: "Resume", href: "resume.pdf", download: "Resume_Varad_Gauthankar.pdf" },
 ];
 
-export default function Navbar() {
+interface NavbarProps {
+  onOpenResume: () => void;
+}
+
+export default function Navbar({ onOpenResume }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -62,7 +67,13 @@ export default function Navbar() {
         <ul className="hidden md:flex gap-10 text-[11px] uppercase tracking-[0.25em] font-black text-brand-stone-500">
           {navItems.map((item) => (
             <li key={item.name} className="hover:text-brand-stone-900 cursor-pointer transition-colors relative group py-1">
-              <a href={item.href}>{item.name}</a>
+              <a 
+                href={item.href} 
+                target={item.name === "Resume" ? "_blank" : undefined}
+                rel={item.name === "Resume" ? "noopener noreferrer" : undefined}
+              >
+                {item.name}
+              </a>
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-yellow transition-all group-hover:w-full" />
             </li>
           ))}
@@ -96,7 +107,11 @@ export default function Navbar() {
                 >
                   <a 
                     href={item.href} 
-                    onClick={() => setIsOpen(false)}
+                    target={item.name === "Resume" ? "_blank" : undefined}
+                    rel={item.name === "Resume" ? "noopener noreferrer" : undefined}
+                    onClick={() => {
+                      setIsOpen(false);
+                    }}
                     className="text-4xl font-serif italic text-brand-stone-900 hover:text-brand-amber transition-colors"
                   >
                     {item.name}

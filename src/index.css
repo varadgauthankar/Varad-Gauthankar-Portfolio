@@ -33,3 +33,53 @@
 .subtle-shadow {
   box-shadow: 0 4px 20px rgba(251, 191, 36, 0.08);
 }
+
+@media print {
+  /* Reset print styles */
+  body {
+    background: #ffffff !important;
+    color: #1c1917 !important;
+  }
+
+  /* Hide everything except the resume's print container */
+  body > div:not(.print-resume-visible),
+  #root > :not(.print-resume-visible),
+  .no-print {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+
+  .print-resume-visible {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    background: #ffffff !important;
+    backdrop-filter: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .print-resume-container {
+    max-width: 100% !important;
+    width: 21cm !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 1.2cm !important;
+    margin: 0 auto !important;
+    background-color: #fdfcf7 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .print-border {
+    border-color: #FBBF24 !important;
+    border-width: 2px !important;
+  }
+}

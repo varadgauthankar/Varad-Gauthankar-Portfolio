@@ -45,13 +45,26 @@ const designs = [
   }
 ];
 
+const fallbacks: Record<number, string> = {
+  1: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&q=80&w=800",
+  2: "https://images.unsplash.com/photo-1565192647048-f997ded87958?auto=format&fit=crop&q=80&w=800",
+  3: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=800",
+  4: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&q=80&w=800",
+  5: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&q=80&w=800",
+  6: "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?auto=format&fit=crop&q=80&w=800",
+  7: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=800",
+  8: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=800",
+};
+
 const photos = [
-  { id: 1, title: "The Canvas of Community", thumbnail: "/photos/photo_2.jpg" },
-  { id: 2, title: "Clay and Henna", thumbnail: "/photos/photo_4.jpg" },
-  { id: 3, title: "Heights of Expression", thumbnail: "/photos/photo_7.jpg" },
-  { id: 4, title: "The Studio Gateway", thumbnail: "/photos/photo_11.jpg" },
-  { id: 5, title: "Brushes and Belonging", thumbnail: "/photos/photo_14.jpg" },
-  { id: 6, title: "Whispers of Clay", thumbnail: "/photos/photo_17.jpg" },
+  { id: 1, title: "", thumbnail: "/photos/photo_1.jpeg" },
+  { id: 2, title: "", thumbnail: "/photos/photo_2.jpeg" },
+  { id: 3, title: "", thumbnail: "/photos/photo_3.jpeg" },
+  { id: 4, title: "", thumbnail: "/photos/photo_4.jpeg" },
+  { id: 5, title: "", thumbnail: "/photos/photo_5.jpeg" },
+  { id: 6, title: "", thumbnail: "/photos/photo_6.jpeg" },
+  { id: 7, title: "", thumbnail: "/photos/photo_7.jpeg" },
+  { id: 8, title: "", thumbnail: "/photos/photo_8.jpeg" },
 ];
 
 // Video Card component for hover-to-play
@@ -70,7 +83,7 @@ function VideoCard({ video, onClick }: { video: typeof videos[0], onClick: () =>
       <img 
         src={video.thumbnail} 
         alt={video.title} 
-        referrerPolicy="no-referrer" 
+        referrerPolicy="no-referrer"
         className={`w-full h-full object-cover transition-opacity duration-500 ${isHovered && !isYoutube ? 'opacity-0' : 'opacity-60 group-hover:opacity-80'}`} 
       />
       
@@ -165,6 +178,16 @@ export default function Works() {
                 <img 
                   src={selectedPhoto.thumbnail} 
                   alt={selectedPhoto.title} 
+                  referrerPolicy="no-referrer"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    const currentSrc = target.src;
+                    if (currentSrc.toLowerCase().endsWith('.jpeg')) {
+                      target.src = currentSrc.substring(0, currentSrc.length - 5) + '.jpg';
+                    } else if (target.src !== fallbacks[selectedPhoto.id]) {
+                      target.src = fallbacks[selectedPhoto.id];
+                    }
+                  }}
                   className="w-full h-full object-contain"
                 />
               )}
@@ -207,25 +230,28 @@ export default function Works() {
             <h3 className="text-3xl md:text-5xl font-serif">Stills & Moments</h3>
           </div>
         </div>
+       
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
           {photos.map((photo) => (
             <motion.div
               key={photo.id}
               whileHover={{ scale: 0.98 }}
-              className="relative aspect-[3/2] group cursor-pointer overflow-hidden rounded-2xl md:rounded-3xl bg-brand-stone-100 shadow-md"
+              className="relative aspect-[4/3] group cursor-pointer overflow-hidden rounded-2xl md:rounded-3xl bg-brand-stone-100 shadow-md"
               onClick={() => setSelectedPhoto(photo)}
             >
+            
               <img 
-                src={photo.thumbnail} 
+                src={photo.thumbnail}
                 alt={photo.title} 
-                referrerPolicy="no-referrer"
+                onError={(e) => {
+                  
+                }}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
               />
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-6">
                 <div className="text-center">
                   <p className="text-[10px] md:text-xs font-black uppercase tracking-widest text-brand-yellow mb-2">View Shot</p>
-                  <p className="text-white font-serif italic text-lg md:text-xl">{photo.title}</p>
                 </div>
               </div>
             </motion.div>
@@ -253,7 +279,7 @@ export default function Works() {
               className="group flex flex-col gap-4 md:gap-6"
             >
               <div className="aspect-[16/10] bg-brand-stone-200 rounded-2xl md:rounded-3xl overflow-hidden relative shadow-lg">
-                <img src={design.thumbnail} alt={design.title} referrerPolicy="no-referrer" className="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000" />
+                <img src={design.thumbnail} alt={design.title} className="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000" />
                 <div className="absolute bottom-4 right-4 md:bottom-6 md:right-6">
                   <div className="w-10 h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur rounded-full flex items-center justify-center shadow-lg group-hover:bg-brand-yellow transition-colors">
                     <ExternalLink className="w-4 h-4 md:w-5 md:h-5 text-brand-stone-900" />

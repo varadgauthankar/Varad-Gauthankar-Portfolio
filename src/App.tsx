@@ -7,7 +7,9 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Works from './components/Works';
 import Contact from './components/Contact';
+import ResumeModal from './components/ResumeModal';
 import { motion, useScroll, useSpring } from 'motion/react';
+import { useState } from 'react';
 
 export default function App() {
   const { scrollYProgress } = useScroll();
@@ -17,6 +19,8 @@ export default function App() {
     restDelta: 0.001
   });
 
+  const [isResumeOpen, setIsResumeOpen] = useState(false);
+
   return (
     <div className="relative min-h-screen selection:bg-brand-yellow/30 selection:text-brand-amber">
       {/* Progress Bar */}
@@ -25,13 +29,15 @@ export default function App() {
         style={{ scaleX }}
       />
       
-      <Navbar />
+      <Navbar onOpenResume={() => setIsResumeOpen(true)} />
       
       <main>
-        <Hero />
+        <Hero onOpenResume={() => setIsResumeOpen(true)} />
         <Works />
         <Contact />
       </main>
+
+      <ResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} />
 
       {/* Floating subtle texture/noise overlay (optional branding touch) */}
       <div className="fixed inset-0 pointer-events-none opacity-[0.03] z-[100] bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]" />
