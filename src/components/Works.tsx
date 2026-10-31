@@ -169,6 +169,27 @@ export default function Works() {
   const [selectedVideo, setSelectedVideo] = useState<typeof videos[0] | null>(null);
   const [selectedPhoto, setSelectedPhoto] = useState<typeof photos[0] | null>(null);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setSelectedVideo(null);
+        setSelectedPhoto(null);
+      }
+    };
+
+    if (selectedVideo || selectedPhoto) {
+      document.body.style.overflow = 'hidden';
+      window.addEventListener('keydown', handleKeyDown);
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [selectedVideo, selectedPhoto]);
+
   const getYoutubeEmbedUrl = (url: string) => {
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|shorts\/)([^#\&\?]*).*/;
     const match = url.match(regExp);
@@ -184,59 +205,70 @@ export default function Works() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10 bg-black/95 backdrop-blur-sm"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-black/95 backdrop-blur-md"
             onClick={() => { setSelectedVideo(null); setSelectedPhoto(null); }}
           >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className={`relative w-full ${
-                selectedVideo 
-                  ? (selectedVideo.type === 'vertical' ? 'max-w-xs sm:max-w-sm aspect-[9/16] max-h-[85vh]' : 'max-w-5xl aspect-video') 
-                  : 'max-w-5xl max-h-full'
-              } bg-black rounded-xl overflow-hidden shadow-2xl`}
-              onClick={(e) => e.stopPropagation()}
+            {/* Global close button on the backdrop corner */}
+            <button 
+              onClick={() => { setSelectedVideo(null); setSelectedPhoto(null); }}
+              className="fixed top-4 right-4 md:top-6 md:right-6 z-[120] w-11 h-11 rounded-full bg-white/10 hover:bg-white/25 active:scale-95 backdrop-blur-md flex items-center justify-center text-white transition-all shadow-lg"
+              aria-label="Close preview"
             >
-              <button 
-                onClick={() => { setSelectedVideo(null); setSelectedPhoto(null); }}
-                className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md flex items-center justify-center text-white transition-colors"
-                aria-label="Close"
+              <X className="w-6 h-6" />
+            </button>
+
+            {/* Video Modal Box */}
+            {selectedVideo && (
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                className={`relative w-full ${
+                  selectedVideo.type === 'vertical' 
+                    ? 'max-w-xs sm:max-w-sm aspect-[9/16] max-h-[85vh]' 
+                    : 'max-w-5xl aspect-video'
+                } bg-black rounded-xl overflow-hidden shadow-2xl`}
+                onClick={(e) => e.stopPropagation()}
               >
-                <X className="w-6 h-6" />
-              </button>
-              
-              {selectedVideo ? (
-                <>
-                  {selectedVideo.videoUrl.includes('youtube.com') || selectedVideo.videoUrl.includes('youtu.be') ? (
-                    <iframe
-                      className="w-full h-full"
-                      src={getYoutubeEmbedUrl(selectedVideo.videoUrl) || ''}
-                      title={selectedVideo.title}
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      allowFullScreen
-                    ></iframe>
-                  ) : (
-                    <video
-                      controls
-                      autoPlay
-                      className="w-full h-full"
-                      key={selectedVideo.id}
-                    >
-                      <source src={selectedVideo.videoUrl} type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
-                  )}
-                </>
-              ) : selectedPhoto && (
+                {selectedVideo.videoUrl.includes('youtube.com') || selectedVideo.videoUrl.includes('youtu.be') ? (
+                  <iframe
+                    className="w-full h-full"
+                    src={getYoutubeEmbedUrl(selectedVideo.videoUrl) || ''}
+                    title={selectedVideo.title}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  ></iframe>
+                ) : (
+                  <video
+                    controls
+                    autoPlay
+                    className="w-full h-full"
+                    key={selectedVideo.id}
+                  >
+                    <source src={selectedVideo.videoUrl} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                )}
+              </motion.div>
+            )}
+
+            {/* Photo / Stills Lightbox - Natural aspect ratio without forced landscape cropping */}
+            {selectedPhoto && (
+              <motion.div
+                initial={{ scale: 0.92, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.92, opacity: 0 }}
+                className="relative flex items-center justify-center max-w-[94vw] max-h-[88vh]"
+                onClick={(e) => e.stopPropagation()}
+              >
                 <img 
                   src={selectedPhoto.fullres} 
-                  alt={selectedPhoto.title || "Zoomed Photo"} 
-                  className="w-full h-full object-contain mx-auto"
+                  alt={selectedPhoto.title || "Full resolution still"} 
+                  className="max-w-[92vw] max-h-[86vh] w-auto h-auto object-contain rounded-xl shadow-2xl block border border-white/10 select-none"
                 />
-              )}
-            </motion.div>
+              </motion.div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
