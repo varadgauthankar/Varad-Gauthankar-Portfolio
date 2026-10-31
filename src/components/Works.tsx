@@ -65,20 +65,28 @@ const videos = [
   },
   { 
     id: 3, 
+    type: "horizontal", 
+    title: "feviquick ad", 
+    thumbnail: "https://img.youtube.com/vi/j9xLxVRK4XU/maxresdefault.jpg", 
+    videoUrl: "https://youtu.be/j9xLxVRK4XU",
+    duration: "0:45" 
+  },
+  { 
+    id: 4, 
     type: "vertical", 
     title: "glimpses of sport day.", 
     thumbnail: "https://img.youtube.com/vi/s2LIrTfzxKM/maxresdefault.jpg", 
     videoUrl: "https://www.youtube.com/shorts/s2LIrTfzxKM",
     duration: "0:30" 
   },
-  // { 
-  //   id: 4, 
-  //   type: "vertical", 
-  //   title: "Social Story #2", 
-  //   thumbnail: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&q=80&w=400", 
-  //   videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-portrait-of-a-woman-in-a-field-of-flowers-34522-large.mp4",
-  //   duration: "0:20" 
-  // },
+  { 
+    id: 5, 
+    type: "vertical", 
+    title: "villa shoot", 
+    thumbnail: "https://img.youtube.com/vi/wltJa7nIeYc/maxresdefault.jpg", 
+    videoUrl: "https://youtube.com/shorts/wltJa7nIeYc?feature=share",
+    duration: "0:30" 
+  },
 ];
 
 const designs = [
@@ -100,6 +108,8 @@ const photos = [
   { id: 6, title: "", thumbnail: "/photos/thumbnails/photo_6.jpeg", fullres: "/photos/photo_6.jpeg" },
   { id: 7, title: "", thumbnail: "/photos/thumbnails/photo_7.jpeg", fullres: "/photos/photo_7.jpeg" },
   { id: 8, title: "", thumbnail: "/photos/thumbnails/photo_8.jpeg", fullres: "/photos/photo_8.jpeg" },
+  { id: 9, title: "", thumbnail: "/assets/aistudio/DSC00237_a2c99591.jpg", fullres: "/assets/aistudio/DSC00237_a2c99591.jpg" },
+  { id: 10, title: "", thumbnail: "/assets/aistudio/DSC002321_06c051af.jpg", fullres: "/assets/aistudio/DSC002321_06c051af.jpg" },
 ];
 
 // Video Card component for hover-to-play
@@ -119,6 +129,12 @@ function VideoCard({ video, onClick }: { video: typeof videos[0], onClick: () =>
         src={video.thumbnail} 
         alt={video.title} 
         referrerPolicy="no-referrer"
+        onError={(e) => {
+          const target = e.currentTarget;
+          if (target.src.includes('maxresdefault.jpg')) {
+            target.src = target.src.replace('maxresdefault.jpg', 'hqdefault.jpg');
+          }
+        }}
         className={`w-full h-full object-cover transition-opacity duration-500 ${isHovered && !isYoutube ? 'opacity-0' : 'opacity-60 group-hover:opacity-80'}`} 
       />
       
@@ -175,7 +191,11 @@ export default function Works() {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className={`relative w-full max-w-5xl ${selectedVideo ? 'aspect-video' : 'max-h-full'} bg-black rounded-xl overflow-hidden shadow-2xl`}
+              className={`relative w-full ${
+                selectedVideo 
+                  ? (selectedVideo.type === 'vertical' ? 'max-w-xs sm:max-w-sm aspect-[9/16] max-h-[85vh]' : 'max-w-5xl aspect-video') 
+                  : 'max-w-5xl max-h-full'
+              } bg-black rounded-xl overflow-hidden shadow-2xl`}
               onClick={(e) => e.stopPropagation()}
             >
               <button 
@@ -231,16 +251,16 @@ export default function Works() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-start">
-          {/* Left Column: 2 Landscape Videos Stacked (16:9) */}
+          {/* Left Column: Landscape Videos Stacked (16:9) */}
           <div className="col-span-12 lg:col-span-7 flex flex-col gap-6 md:gap-8">
-            {videos.filter(v => v.type === "horizontal").slice(0, 2).map((video) => (
+            {videos.filter(v => v.type === "horizontal").map((video) => (
               <VideoCard key={video.id} video={video} onClick={() => setSelectedVideo(video)} />
             ))}
           </div>
 
-          {/* Right Column: 2 Vertical Videos Side-by-Side (9:16) */}
+          {/* Right Column: Vertical Videos (9:16) */}
           <div className="col-span-12 lg:col-span-5 grid grid-cols-2 gap-4 md:gap-6">
-            {videos.filter(v => v.type === "vertical").slice(0, 2).map((video) => (
+            {videos.filter(v => v.type === "vertical").map((video) => (
               <VideoCard key={video.id} video={video} onClick={() => setSelectedVideo(video)} />
             ))}
           </div>
